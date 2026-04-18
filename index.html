@@ -87,6 +87,7 @@ body {
   background-image: radial-gradient(ellipse 80% 60% at 30% 110%, rgba(0,180,160,.25) 0%, transparent 55%);
   padding: 52px 44px;
   display: flex; flex-direction: column; justify-content: space-between;
+  min-width: 0;
 }
 .login-brand .brand-icon {
   width: 48px; height: 48px; background: var(--teal);
@@ -98,7 +99,7 @@ body {
 .login-feature { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
 .login-feature .feat-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
 .login-feature p { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.5; }
-.login-right { padding: 52px 44px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+.login-right { padding: 52px 44px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; min-width: 0; }
 .login-right h2 { font-size: 22px; font-weight: 600; color: var(--text-pri); margin-bottom: 6px; }
 .login-right .sub { font-size: 13px; color: var(--text-sec); margin-bottom: 32px; }
 .role-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 24px; }
@@ -130,23 +131,6 @@ body {
 .btn-login:hover { background: var(--navy-soft); }
 .btn-login:active { transform: scale(.98); }
 .login-note { font-size: 11px; color: var(--text-ter); text-align: center; margin-top: 14px; }
-
-/* Mobile login branding strip */
-.login-mobile-brand {
-  display: none;
-  background: var(--navy-mid);
-  background-image: radial-gradient(ellipse 80% 60% at 30% 110%, rgba(0,180,160,.25) 0%, transparent 55%);
-  padding: 28px 24px 24px;
-  border-radius: 0 0 24px 24px;
-  margin-bottom: 4px;
-}
-.login-mobile-brand .mb-icon {
-  width: 44px; height: 44px; background: var(--teal);
-  border-radius: 11px; display: flex; align-items: center; justify-content: center;
-  margin-bottom: 12px;
-}
-.login-mobile-brand h1 { font-family: var(--font-disp); font-size: 26px; color: var(--white); font-weight: 600; }
-.login-mobile-brand .mb-desc { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 4px; line-height: 1.5; }
 
 /* ══════════════════════════════════════
    MOBILE MENU TOGGLE
@@ -284,7 +268,6 @@ body {
   border-radius: 10px; display: flex; align-items: center; justify-content: center;
   padding: 0 4px;
 }
-/* Center FAB button */
 .bn-fab-wrap {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 4px; position: relative;
@@ -550,10 +533,13 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .g2, .g3 { grid-template-columns: 1fr; }
   .frow-2, .frow-3 { grid-template-columns: 1fr; }
   .search-wrap input { width: 180px; }
+  .login-panel { width: min(100%, 760px); }
 }
 
 /* ══════════════════════════════════════
    RESPONSIVE — MOBILE (≤768px)
+   KEY FIX: login-panel stacks top/bottom
+   login-left on top, login-right below
 ══════════════════════════════════════ */
 @media (max-width: 768px) {
   html { font-size: 13px; }
@@ -564,42 +550,83 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .app { flex-direction: column; }
   .main { width: 100%; height: 100%; }
 
-  /* ── LOGIN: full scroll, no overflow hidden ── */
+  /* ── LOGIN: scroll vertically ── */
   #loginScreen {
     align-items: flex-start;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding: 0 0 32px;
+    padding: 0;
+    min-height: 100vh;
+    height: auto;
   }
+
+  /* ── LOGIN PANEL: single column, full width ── */
   .login-panel {
-    grid-template-columns: 1fr;
-    width: 100%; max-width: 100%;
-    min-height: unset;
-    border-radius: 0;
-    box-shadow: none;
-    background: var(--surface);
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: unset !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: unset !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
   }
-  /* Hide desktop left panel */
-  .login-left { display: none; }
-  /* Show mobile branding strip */
-  .login-mobile-brand { display: block; }
-  /* Make right side scroll naturally */
+
+  /* ── LOGIN LEFT: brand banner on top, full width ── */
+  .login-left {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    padding: 36px 24px 32px !important;
+    border-radius: 0 !important;
+    min-height: unset !important;
+    background: var(--navy-mid) !important;
+    background-image: radial-gradient(ellipse 80% 60% at 30% 110%, rgba(0,180,160,.25) 0%, transparent 55%) !important;
+  }
+
+  /* Compact the brand section — hide feature bullets to save space */
+  .login-brand .brand-icon {
+    width: 44px; height: 44px; margin-bottom: 14px;
+  }
+  .login-brand h1 { font-size: 26px; }
+  .login-brand p  { font-size: 12px; margin-top: 6px; }
+
+  /* Hide feature list on mobile — too long */
+  .login-features { display: none; }
+
+  /* ── LOGIN RIGHT: form card below, overlaps brand slightly ── */
   .login-right {
-    padding: 24px 20px 32px;
-    background: var(--white);
-    margin: 0 12px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    overflow: visible;
+    width: 100% !important;
+    padding: 28px 20px 40px !important;
+    background: var(--white) !important;
+    border-radius: 20px 20px 0 0 !important;
+    margin-top: -20px !important;
+    box-shadow: var(--shadow-lg) !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
   }
-  .login-right h2 { font-size: 18px; }
+  .login-right h2 { font-size: 20px; margin-bottom: 4px; }
   .login-right .sub { font-size: 12px; margin-bottom: 20px; }
-  /* Role cards: 3 columns still but compact */
-  .role-grid { gap: 6px; margin-bottom: 18px; }
+
+  /* Role cards: 3 across on mobile */
+  .role-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 18px;
+  }
   .role-card { padding: 10px 6px; }
   .role-card .rc-icon { width: 28px; height: 28px; margin-bottom: 6px; }
   .role-card .rc-label { font-size: 11px; }
-  .role-card .rc-desc  { font-size: 9px; }
+  .role-card .rc-desc  { font-size: 10px; }
+
+  .section-hdr { flex-wrap: wrap; row-gap: 6px; }
+  .section-hdr::after { min-width: 40px; }
 
   /* ── Sidebar ── */
   .sidebar {
@@ -607,6 +634,11 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
     width: 260px; transform: translateX(-100%); z-index: 300;
   }
   .sidebar.open { transform: translateX(0); }
+  .sb-user {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    margin-bottom: calc(var(--bottom-nav-h));
+  }
+
   .menu-toggle { display: flex; }
 
   /* ── Topbar ── */
@@ -615,16 +647,31 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .top-chip:last-child { display: none; }
   .top-chip { padding: 4px 10px; font-size: 11px; }
 
-  /* ── Content — add bottom nav padding ── */
+  /* ── Content ── */
   .content {
-    padding: 16px 16px calc(var(--bottom-nav-h) + 16px);
+    padding: 16px 16px;
+    padding-bottom: calc(var(--bottom-nav-h) + 24px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     flex: 1;
+    height: 0;
   }
 
   /* ── Bottom Nav ── */
-  .bottom-nav { display: flex; }
+  .bottom-nav {
+    display: flex;
+    position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
+  }
+  .bottom-nav-inner { width: 100%; justify-content: space-evenly; }
+
+  .bn-item {
+    padding: 8px 4px 6px; gap: 3px; font-size: 10px;
+    flex: 0 1 18%; max-width: 70px;
+  }
+  .bn-item .bn-icon { width: 22px; height: 22px; }
+  .bn-fab-wrap { padding-top: 0; flex: 0 0 60px; max-width: 60px; }
+  .bn-fab { width: 48px; height: 48px; margin-top: -20px; flex-shrink: 0; }
+  .bn-fab-label { font-size: 10px; margin-top: 2px; }
 
   /* ── Stats ── */
   .stats-4 { grid-template-columns: repeat(2,1fr); gap: 10px; }
@@ -690,7 +737,9 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .invoice { padding: 14px; font-size: 12px; }
   .inv-num { font-size: 16px; }
   .prog-label { width: 80px; }
-  .login-right { margin: 0 10px; padding: 20px 16px 28px; }
+  .login-right { padding: 24px 18px 32px !important; margin-top: -14px !important; }
+  .login-left { padding: 28px 18px 28px !important; }
+  .role-grid { grid-template-columns: repeat(3,1fr); gap: 6px; }
 }
 
 /* ══════════════════════════════════════
@@ -700,14 +749,15 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .stats-4 { grid-template-columns: 1fr 1fr; }
   .frow-bill { grid-template-columns: 1fr 46px 64px 28px; }
   .stat-value { font-size: 16px; }
-  .login-right { margin: 0 8px; padding: 18px 14px 24px; }
+  .login-right { padding: 20px 16px 28px !important; margin-top: -12px !important; }
+  .login-left { padding: 24px 16px 24px !important; }
+  .login-brand h1 { font-size: 22px; }
 }
 </style>
 </head>
 <body>
 <div id="loadingBar"></div>
 
-<!-- SVG ICON LIBRARY -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
   <symbol id="i-dash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
   <symbol id="i-bill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="8" y1="9" x2="10" y2="9"/></symbol>
@@ -739,25 +789,10 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
 </svg>
 
-<!-- Sidebar Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-<!-- ══════════════════════════════════════
-     LOGIN
-══════════════════════════════════════ -->
 <div id="loginScreen">
-
-  <!-- Mobile-only branding strip (shown above login card on mobile) -->
-  <div class="login-mobile-brand">
-    <div class="mb-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-    </div>
-    <h1>FertiBill</h1>
-    <div class="mb-desc">Billing &amp; Report Management System<br>for Agricultural Enterprises</div>
-  </div>
-
   <div class="login-panel">
-    <!-- Desktop left branding panel -->
     <div class="login-left">
       <div class="login-brand">
         <div class="brand-icon">
@@ -774,7 +809,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
       </div>
     </div>
 
-    <!-- Right / only panel (mobile) -->
     <div class="login-right">
       <h2>Welcome back</h2>
       <p class="sub">Sign in to your account to continue</p>
@@ -815,13 +849,9 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     APP
-══════════════════════════════════════ -->
 <div id="appScreen">
 <div class="app">
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sb-logo">
       <div class="sb-logo-icon">
@@ -877,7 +907,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
     <header class="topbar">
       <div class="topbar-left">
@@ -900,7 +929,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 
     <div class="content">
 
-      <!-- DASHBOARD -->
       <div id="page-dashboard" class="page active">
         <div class="stats-row stats-4">
           <div class="stat-card c-teal">
@@ -970,7 +998,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- CREATE BILL -->
       <div id="page-billing" class="page">
         <div id="billAlert" style="display:none"></div>
         <div class="g2" style="align-items:start">
@@ -1053,7 +1080,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ALL BILLS -->
       <div id="page-bills" class="page">
         <div class="toolbar">
           <div class="search-wrap">
@@ -1083,7 +1109,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- CUSTOMERS -->
       <div id="page-customers" class="page">
         <div class="toolbar">
           <div class="search-wrap">
@@ -1107,7 +1132,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- PRODUCTS -->
       <div id="page-products" class="page">
         <div class="toolbar">
           <div class="search-wrap">
@@ -1131,7 +1155,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- REPORTS -->
       <div id="page-reports" class="page">
         <div id="reportsBlocked" style="display:none">
           <div class="alert alert-warning">
@@ -1198,39 +1221,27 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /app -->
-
-<!-- ══════════════════════════════════════
-     MOBILE BOTTOM NAV
-══════════════════════════════════════ -->
-<nav class="bottom-nav" id="bottomNav">
+    </div></div></div><nav class="bottom-nav" id="bottomNav">
   <div class="bottom-nav-inner">
-    <!-- Dashboard -->
     <button class="bn-item active" id="bn-dashboard" onclick="showPage('dashboard',document.querySelector('[data-page=dashboard]'));updateBottomNav('dashboard')">
       <div class="bn-icon"><svg width="20" height="20"><use href="#i-dash"/></svg></div>
       <span>Home</span>
     </button>
-    <!-- Bills -->
     <button class="bn-item" id="bn-bills" onclick="showPage('bills',document.querySelector('[data-page=bills]'));updateBottomNav('bills')">
       <div class="bn-icon"><svg width="20" height="20"><use href="#i-bills"/></svg></div>
       <span>Bills</span>
       <span class="bn-badge" id="bnBillBadge">0</span>
     </button>
-    <!-- Center FAB: New Bill -->
     <div class="bn-fab-wrap">
       <button class="bn-fab" onclick="showPage('billing',document.querySelector('[data-page=billing]'));updateBottomNav('billing')" title="Create New Bill">
         <svg width="24" height="24"><use href="#i-plus"/></svg>
       </button>
       <span class="bn-fab-label">New Bill</span>
     </div>
-    <!-- Customers -->
     <button class="bn-item" id="bn-customers" onclick="showPage('customers',document.querySelector('[data-page=customers]'));updateBottomNav('customers')">
       <div class="bn-icon"><svg width="20" height="20"><use href="#i-users"/></svg></div>
       <span>Clients</span>
     </button>
-    <!-- Reports -->
     <button class="bn-item" id="bn-reports" onclick="showPage('reports',document.querySelector('[data-page=reports]'));updateBottomNav('reports')">
       <div class="bn-icon"><svg width="20" height="20"><use href="#i-report"/></svg></div>
       <span>Reports</span>
@@ -1238,10 +1249,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </nav>
 
-</div><!-- /appScreen -->
-
-<!-- MODALS -->
-<div class="modal-bg" id="custModal">
+</div><div class="modal-bg" id="custModal">
   <div class="modal-box">
     <div class="modal-head">
       <h3><svg width="16" height="16"><use href="#i-users"/></svg><span id="custModalTitle">Add Customer</span></h3>
@@ -1319,7 +1327,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 </div>
 
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────────
 let currentRole = 'Admin';
 let billCounter = 1043;
 let editingProdId = null;
@@ -1351,7 +1358,6 @@ let bills = [
   {id:'INV-1036',custId:2,customer:'Raza Agri',       items:[{name:'Pesticide Confidor 100ml',qty:10,price:850}],amount:8500,status:'Paid',date:'14 Apr 2026'},
 ];
 
-// ── HELPERS ──────────────────────────────────────────────────────────────────
 const icon = id => `<svg width="13" height="13" style="display:inline-flex;vertical-align:middle"><use href="#i-${id}"/></svg>`;
 const sClass = s => s==='Paid'?'paid':s==='Pending'?'pending':'partial';
 const fmt = n => Number(n).toLocaleString('en-PK');
@@ -1365,7 +1371,6 @@ function initLoadBar() {
   setTimeout(()=>{b.style.width='100%';setTimeout(()=>{b.style.opacity='0';},300);},400);
 }
 
-// ── SIDEBAR MOBILE ────────────────────────────────────────────────────────────
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('open');
@@ -1375,14 +1380,12 @@ function closeSidebar() {
   document.getElementById('sidebarOverlay').classList.remove('open');
 }
 
-// ── BOTTOM NAV ────────────────────────────────────────────────────────────────
 function updateBottomNav(page) {
   document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
   const el = document.getElementById('bn-'+page);
   if (el) el.classList.add('active');
 }
 
-// ── LOGIN / LOGOUT ───────────────────────────────────────────────────────────
 function selectRole(role,el) {
   currentRole=role;
   document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('active'));
@@ -1397,7 +1400,6 @@ function doLogin() {
   document.getElementById('sbAvatar').textContent=initials;
   document.getElementById('sbName').textContent=currentRole.toLowerCase();
   document.getElementById('sbRole').textContent=currentRole==='Admin'?'Administrator':currentRole==='Manager'?'Sales Manager':'Billing Clerk';
-  // Clerk lock
   if (currentRole==='Clerk') {
     document.getElementById('navReports').classList.add('locked');
     document.getElementById('bn-reports').style.opacity='.35';
@@ -1416,11 +1418,9 @@ function logout() {
   document.querySelectorAll('.role-card').forEach((c,i)=>i===0?c.classList.add('active'):c.classList.remove('active'));
   document.getElementById('loginUser').value='admin';
   closeSidebar();
-  // scroll login back to top
   document.getElementById('loginScreen').scrollTop=0;
 }
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
 function initApp() {
   billCounter=1043; billItems=[];
   refreshBillNum(); addBillItem();
@@ -1436,7 +1436,6 @@ function updateSbBadge() {
   document.getElementById('bnBillBadge').textContent=n;
 }
 
-// ── ROUTING ──────────────────────────────────────────────────────────────────
 const pageTitles={dashboard:'Dashboard',billing:'Create New Bill',bills:'All Bills',customers:'Customers',products:'Products',reports:'Reports'};
 function showPage(name, navEl) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1449,12 +1448,10 @@ function showPage(name, navEl) {
   if (name==='bills')     renderBillsTable();
   if (name==='customers') renderCustomersTable();
   if (name==='products')  renderProductsTable();
-  // scroll content to top
   document.querySelector('.content').scrollTop=0;
   closeSidebar();
 }
 
-// ── DASHBOARD ────────────────────────────────────────────────────────────────
 function renderDashboard() {
   document.getElementById('dashBillCount').textContent=bills.length;
   document.getElementById('dashCustCount').textContent=customers.length;
@@ -1470,7 +1467,6 @@ function renderDashboard() {
     </tr>`).join('');
 }
 
-// ── BILL CREATION ────────────────────────────────────────────────────────────
 function refreshBillNum() { document.getElementById('fBillNum').value='INV-'+billCounter; }
 function populateCustDropdown() {
   const sel=document.getElementById('fCustomer');
@@ -1544,7 +1540,6 @@ function saveBill() {
   updatePreview(); renderDashboard(); updateSbBadge();
 }
 
-// ── BILLS TABLE ──────────────────────────────────────────────────────────────
 function renderBillsTable() {
   const s=(document.getElementById('billSearch').value||'').toLowerCase();
   const f=document.getElementById('billFilterStatus').value;
@@ -1588,7 +1583,6 @@ function deleteBill(id) {
   bills=bills.filter(b=>b.id!==id); renderBillsTable(); renderDashboard(); updateSbBadge();
 }
 
-// ── CUSTOMERS ────────────────────────────────────────────────────────────────
 function renderCustomersTable() {
   const s=(document.getElementById('custSearch').value||'').toLowerCase();
   const flt=customers.filter(c=>c.name.toLowerCase().includes(s)||c.phone.includes(s)||(c.address||'').toLowerCase().includes(s));
@@ -1644,7 +1638,6 @@ function deleteCustomer(id) {
   customers=customers.filter(c=>c.id!==id); renderCustomersTable(); populateCustDropdown(); renderDashboard();
 }
 
-// ── PRODUCTS ─────────────────────────────────────────────────────────────────
 function renderProductsTable() {
   const s=(document.getElementById('prodSearch').value||'').toLowerCase();
   const flt=products.filter(p=>p.name.toLowerCase().includes(s)||p.cat.toLowerCase().includes(s));
@@ -1699,7 +1692,6 @@ function deleteProduct(id) {
   products=products.filter(p=>p.id!==id); renderProductsTable();
 }
 
-// ── REPORTS ──────────────────────────────────────────────────────────────────
 function renderReports() {
   if(currentRole==='Clerk'){
     document.getElementById('reportsBlocked').style.display='block';
@@ -1718,11 +1710,9 @@ function renderReports() {
   document.getElementById('rptBillsBody').innerHTML=bills.map(b=>`<tr><td class="td-mono">${b.id}</td><td>${b.customer}</td><td class="td-bold td-mono">${fmt(b.amount)}</td><td><span class="badge badge-${sClass(b.status)}">${b.status}</span></td><td class="td-muted">${b.date}</td></tr>`).join('');
 }
 
-// ── MODALS ───────────────────────────────────────────────────────────────────
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-bg').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
-// ── ALERT ────────────────────────────────────────────────────────────────────
 function showAlert(id,type,msg) {
   const icons={success:'check',warning:'warning',danger:'warning',info:'shield'};
   const el=document.getElementById(id);
