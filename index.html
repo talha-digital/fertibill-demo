@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FertiBill — Billing & Report Management System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,18 +40,25 @@
   --font-mono: 'DM Mono', monospace;
   --font-disp: 'Playfair Display', serif;
   --sidebar-w: 248px;
+  --bottom-nav-h: 66px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 14px; }
-body { font-family: var(--font); background: var(--surface); color: var(--text-pri); line-height: 1.5; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font);
+  background: var(--surface);
+  color: var(--text-pri);
+  line-height: 1.5;
+  height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-/* ── SVG ICONS ── */
 .icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .icon svg { display: block; }
 
@@ -81,17 +88,13 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
   padding: 52px 44px;
   display: flex; flex-direction: column; justify-content: space-between;
 }
-.login-brand { }
 .login-brand .brand-icon {
-  width: 48px; height: 48px;
-  background: var(--teal);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; background: var(--teal);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
   margin-bottom: 20px;
 }
 .login-brand h1 { font-family: var(--font-disp); font-size: 30px; color: var(--white); font-weight: 600; line-height: 1.1; }
 .login-brand p  { color: rgba(255,255,255,.5); font-size: 13px; margin-top: 8px; line-height: 1.6; }
-.login-features { }
 .login-feature { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
 .login-feature .feat-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
 .login-feature p { font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.5; }
@@ -100,13 +103,8 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .login-right .sub { font-size: 13px; color: var(--text-sec); margin-bottom: 32px; }
 .role-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 24px; }
 .role-card {
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all .18s;
-  background: var(--white);
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 12px 8px; text-align: center; cursor: pointer; transition: all .18s; background: var(--white);
 }
 .role-card:hover { border-color: var(--teal); background: var(--teal-lt); }
 .role-card.active { border-color: var(--teal); background: var(--teal-lt); }
@@ -117,20 +115,15 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .form-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-sec); margin-bottom: 6px; letter-spacing: .3px; text-transform: uppercase; }
 .form-field input {
   width: 100%; padding: 10px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
+  border: 1.5px solid var(--border); border-radius: var(--radius);
   font-family: var(--font); font-size: 13px; color: var(--text-pri);
-  background: var(--white);
-  outline: none; transition: border-color .15s, box-shadow .15s;
+  background: var(--white); outline: none; transition: border-color .15s, box-shadow .15s;
 }
 .form-field input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,180,160,.12); }
 .btn-login {
-  width: 100%; padding: 12px;
-  background: var(--navy);
-  color: var(--white);
-  border: none; border-radius: var(--radius);
-  font-family: var(--font); font-size: 14px; font-weight: 600;
-  cursor: pointer; margin-top: 8px;
+  width: 100%; padding: 12px; background: var(--navy); color: var(--white);
+  border: none; border-radius: var(--radius); font-family: var(--font);
+  font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px;
   transition: background .15s, transform .1s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
@@ -138,26 +131,35 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .btn-login:active { transform: scale(.98); }
 .login-note { font-size: 11px; color: var(--text-ter); text-align: center; margin-top: 14px; }
 
+/* Mobile login branding strip */
+.login-mobile-brand {
+  display: none;
+  background: var(--navy-mid);
+  background-image: radial-gradient(ellipse 80% 60% at 30% 110%, rgba(0,180,160,.25) 0%, transparent 55%);
+  padding: 28px 24px 24px;
+  border-radius: 0 0 24px 24px;
+  margin-bottom: 4px;
+}
+.login-mobile-brand .mb-icon {
+  width: 44px; height: 44px; background: var(--teal);
+  border-radius: 11px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+}
+.login-mobile-brand h1 { font-family: var(--font-disp); font-size: 26px; color: var(--white); font-weight: 600; }
+.login-mobile-brand .mb-desc { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 4px; line-height: 1.5; }
+
 /* ══════════════════════════════════════
    MOBILE MENU TOGGLE
 ══════════════════════════════════════ */
 .menu-toggle {
   display: none;
-  width: 36px; height: 36px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--white);
-  cursor: pointer;
-  align-items: center; justify-content: center;
-  color: var(--text-pri);
-  flex-shrink: 0;
+  width: 36px; height: 36px; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--white); cursor: pointer;
+  align-items: center; justify-content: center; color: var(--text-pri); flex-shrink: 0;
 }
 .sidebar-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(11,31,58,.5);
-  z-index: 200;
-  backdrop-filter: blur(2px);
+  display: none; position: fixed; inset: 0;
+  background: rgba(11,31,58,.5); z-index: 200; backdrop-filter: blur(2px);
 }
 .sidebar-overlay.open { display: block; }
 
@@ -169,24 +171,18 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width: var(--sidebar-w);
-  background: var(--navy);
-  display: flex; flex-direction: column;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  z-index: 300;
+  width: var(--sidebar-w); background: var(--navy);
+  display: flex; flex-direction: column; flex-shrink: 0;
+  position: relative; overflow: hidden; z-index: 300;
   transition: transform .25s cubic-bezier(.4,0,.2,1);
 }
 .sidebar::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
   background: radial-gradient(ellipse at bottom left, rgba(0,180,160,.12) 0%, transparent 70%);
   pointer-events: none;
 }
 .sb-logo {
-  padding: 24px 22px 20px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 24px 22px 20px; border-bottom: 1px solid rgba(255,255,255,.06);
   display: flex; align-items: center; gap: 12px;
 }
 .sb-logo-icon {
@@ -201,8 +197,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
   display: flex; align-items: center; gap: 11px;
   padding: 9px 12px; border-radius: var(--radius);
   cursor: pointer; color: rgba(255,255,255,.55);
-  font-size: 13px; font-weight: 500;
-  transition: all .15s; margin-bottom: 2px;
+  font-size: 13px; font-weight: 500; transition: all .15s; margin-bottom: 2px;
   border: 1px solid transparent;
 }
 .sb-item:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); }
@@ -211,20 +206,13 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .sb-item.active .sb-icon { opacity: 1; }
 .sb-item.locked { opacity: .3; pointer-events: none; }
 .sb-badge { margin-left: auto; background: var(--teal); color: var(--navy); font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
-.sb-user {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255,255,255,.06);
-  position: relative; z-index: 1;
-}
+.sb-user { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.06); position: relative; z-index: 1; }
 .sb-user-row { display: flex; align-items: center; gap: 10px; }
 .sb-avatar {
   width: 34px; height: 34px; border-radius: 8px;
-  background: var(--navy-soft);
-  border: 1.5px solid rgba(255,255,255,.12);
+  background: var(--navy-soft); border: 1.5px solid rgba(255,255,255,.12);
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: var(--teal);
-  font-family: var(--font-mono);
-  flex-shrink: 0;
+  font-size: 12px; font-weight: 700; color: var(--teal); font-family: var(--font-mono); flex-shrink: 0;
 }
 .sb-user-info { flex: 1; overflow: hidden; }
 .sb-user-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -240,29 +228,81 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 /* ── MAIN ── */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
 .topbar {
-  background: var(--white);
-  padding: 0 28px;
-  height: 58px;
+  background: var(--white); padding: 0 28px; height: 58px;
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
-  gap: 12px;
+  flex-shrink: 0; box-shadow: var(--shadow-sm); gap: 12px;
 }
 .topbar-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
 .topbar-left h2 { font-size: 16px; font-weight: 600; color: var(--text-pri); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.breadcrumb { font-size: 12px; color: var(--text-ter); }
 .topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .top-chip {
   display: flex; align-items: center; gap: 6px;
   background: var(--surface); border: 1px solid var(--border);
   padding: 5px 12px; border-radius: 20px;
-  font-size: 12px; color: var(--text-sec); font-weight: 500;
-  white-space: nowrap;
+  font-size: 12px; color: var(--text-sec); font-weight: 500; white-space: nowrap;
 }
 .top-chip .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
-
 .content { padding: 24px 28px; flex: 1; overflow-y: auto; }
+
+/* ══════════════════════════════════════
+   MOBILE BOTTOM NAV
+══════════════════════════════════════ */
+.bottom-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--bottom-nav-h);
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 20px rgba(11,31,58,.08);
+  z-index: 400;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-nav-inner {
+  display: flex; align-items: stretch; height: 100%;
+  position: relative;
+}
+.bn-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px;
+  cursor: pointer; color: var(--text-ter);
+  font-size: 10px; font-weight: 600; letter-spacing: .2px;
+  transition: color .15s; padding: 6px 4px; position: relative;
+  border: none; background: none; text-transform: capitalize;
+}
+.bn-item:hover { color: var(--text-sec); }
+.bn-item.active { color: var(--teal); }
+.bn-item .bn-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+}
+.bn-item.active .bn-icon svg { stroke: var(--teal); }
+.bn-badge {
+  position: absolute; top: 6px; right: calc(50% - 18px);
+  background: var(--teal); color: var(--navy);
+  font-size: 9px; font-weight: 700; min-width: 16px; height: 16px;
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  padding: 0 4px;
+}
+/* Center FAB button */
+.bn-fab-wrap {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 4px; position: relative;
+}
+.bn-fab {
+  width: 50px; height: 50px;
+  background: var(--teal);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,180,160,.4);
+  cursor: pointer; border: none;
+  transition: transform .15s, box-shadow .15s;
+  margin-top: -18px;
+}
+.bn-fab:hover { transform: scale(1.06); box-shadow: 0 6px 20px rgba(0,180,160,.5); }
+.bn-fab:active { transform: scale(.95); }
+.bn-fab svg { stroke: white; }
+.bn-fab-label { font-size: 10px; font-weight: 600; color: var(--text-ter); letter-spacing: .2px; }
 
 /* ── PAGES ── */
 .page { display: none; animation: fadeIn .2s ease; }
@@ -274,13 +314,9 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .stats-4 { grid-template-columns: repeat(4,1fr); }
 .stats-3 { grid-template-columns: repeat(3,1fr); }
 .stat-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
-  position: relative; overflow: hidden;
-  transition: box-shadow .2s;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+  box-shadow: var(--shadow-sm); position: relative; overflow: hidden; transition: box-shadow .2s;
 }
 .stat-card:hover { box-shadow: var(--shadow); }
 .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
@@ -289,11 +325,7 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .stat-card.c-red::before   { background: var(--red); }
 .stat-card.c-green::before { background: var(--green); }
 .stat-card.c-blue::before  { background: var(--blue); }
-.stat-icon-wrap {
-  width: 40px; height: 40px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 14px;
-}
+.stat-icon-wrap { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
 .stat-icon-wrap.teal  { background: var(--teal-lt); color: var(--teal-dk); }
 .stat-icon-wrap.gold  { background: var(--gold-lt); color: var(--gold); }
 .stat-icon-wrap.red   { background: var(--red-lt); color: var(--red); }
@@ -302,42 +334,32 @@ body { font-family: var(--font); background: var(--surface); color: var(--text-p
 .stat-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: var(--text-sec); margin-bottom: 6px; }
 .stat-value { font-size: 26px; font-weight: 600; color: var(--text-pri); line-height: 1; font-family: var(--font-mono); }
 .stat-sub   { font-size: 11px; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
-.stat-up    { color: var(--green); } .stat-dn { color: var(--red); } .stat-neu { color: var(--text-sec); }
+.stat-up { color: var(--green); } .stat-dn { color: var(--red); } .stat-neu { color: var(--text-sec); }
 
 /* ── CARDS ── */
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 .card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  margin-bottom: 16px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 16px;
 }
 .card:last-child { margin-bottom: 0; }
 .card-head {
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
-  background: var(--white);
-  flex-wrap: wrap; gap: 8px;
+  background: var(--white); flex-wrap: wrap; gap: 8px;
 }
 .card-head h3 { font-size: 13px; font-weight: 600; color: var(--text-pri); display: flex; align-items: center; gap: 8px; }
 .card-head h3 .ch-icon { width: 18px; height: 18px; color: var(--text-sec); }
 .card-body { padding: 20px; }
-.card-flush { }
 
 /* ── TABLE ── */
 .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 thead th {
-  text-align: left; padding: 10px 16px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  font-size: 11px; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .5px; color: var(--text-sec);
-  white-space: nowrap;
+  text-align: left; padding: 10px 16px; background: var(--surface);
+  border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .5px; color: var(--text-sec); white-space: nowrap;
 }
 tbody td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-pri); vertical-align: middle; }
 tbody tr:last-child td { border-bottom: none; }
@@ -350,8 +372,7 @@ tbody tr:hover td { background: #fafbfd; }
 .badge {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 3px 9px; border-radius: 20px;
-  font-size: 11px; font-weight: 600; letter-spacing: .2px;
-  white-space: nowrap;
+  font-size: 11px; font-weight: 600; letter-spacing: .2px; white-space: nowrap;
 }
 .badge-paid    { background: var(--green-lt); color: var(--green); }
 .badge-pending { background: var(--amber-lt); color: var(--amber); }
@@ -364,8 +385,7 @@ tbody tr:hover td { background: #fafbfd; }
 /* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  padding: 8px 18px; border-radius: var(--radius);
-  border: none; cursor: pointer;
+  padding: 8px 18px; border-radius: var(--radius); border: none; cursor: pointer;
   font-family: var(--font); font-size: 13px; font-weight: 600;
   transition: all .15s; white-space: nowrap; text-decoration: none;
 }
@@ -391,11 +411,9 @@ tbody tr:hover td { background: #fafbfd; }
 .fgroup:last-child { margin-bottom: 0; }
 .flabel { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: var(--text-sec); margin-bottom: 6px; }
 .fcontrol {
-  width: 100%; padding: 9px 13px;
-  border: 1.5px solid var(--border); border-radius: var(--radius);
+  width: 100%; padding: 9px 13px; border: 1.5px solid var(--border); border-radius: var(--radius);
   font-family: var(--font); font-size: 13px; color: var(--text-pri);
-  background: var(--white); outline: none;
-  transition: border-color .15s, box-shadow .15s;
+  background: var(--white); outline: none; transition: border-color .15s, box-shadow .15s;
 }
 .fcontrol:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,180,160,.1); }
 .fcontrol[readonly] { background: var(--surface); color: var(--text-sec); font-family: var(--font-mono); font-size: 13px; }
@@ -430,12 +448,9 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 
 /* ── INVOICE ── */
 .invoice {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  font-size: 13px;
-  max-width: 560px; margin: 0 auto;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px;
+  font-size: 13px; max-width: 560px; margin: 0 auto;
 }
 .inv-head { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 2px solid var(--navy); margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
 .inv-co h2 { font-family: var(--font-disp); font-size: 18px; color: var(--navy); font-weight: 600; }
@@ -461,8 +476,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 .modal-bg {
   display: none; position: fixed; inset: 0;
   background: rgba(11,31,58,.55); backdrop-filter: blur(4px);
-  z-index: 500; align-items: center; justify-content: center;
-  padding: 16px;
+  z-index: 500; align-items: center; justify-content: center; padding: 16px;
 }
 .modal-bg.open { display: flex; }
 .modal-box {
@@ -483,14 +497,12 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 .modal-foot {
   padding: 16px 24px; border-top: 1px solid var(--border);
   display: flex; justify-content: flex-end; gap: 10px;
-  background: var(--surface); border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-  flex-wrap: wrap;
+  background: var(--surface); border-radius: 0 0 var(--radius-lg) var(--radius-lg); flex-wrap: wrap;
 }
 .close-btn {
   width: 30px; height: 30px; border: 1px solid var(--border);
   border-radius: 7px; background: none; cursor: pointer; color: var(--text-sec);
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0;
 }
 .close-btn:hover { background: var(--surface); color: var(--text-pri); }
 
@@ -514,7 +526,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
 
 /* ── PRINT ── */
 @media print {
-  .sidebar, .topbar, .toolbar, .btn, .no-print, .modal-bg, .menu-toggle, .sidebar-overlay { display: none !important; }
+  .sidebar, .topbar, .toolbar, .btn, .no-print, .modal-bg, .menu-toggle, .sidebar-overlay, .bottom-nav { display: none !important; }
   .main { overflow: visible; }
   .content { padding: 0; overflow: visible; }
   .page { display: block !important; }
@@ -523,7 +535,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .invoice { border: none; padding: 0; box-shadow: none; max-width: 100%; }
 }
 
-/* ── LOADING ── */
 #loadingBar {
   position: fixed; top: 0; left: 0; height: 2px;
   background: linear-gradient(90deg, var(--teal), var(--navy));
@@ -545,85 +556,115 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
    RESPONSIVE — MOBILE (≤768px)
 ══════════════════════════════════════ */
 @media (max-width: 768px) {
-
   html { font-size: 13px; }
+
+  /* ── Body & App ── */
   body { overflow: hidden; }
+  #appScreen { height: 100vh; }
+  .app { flex-direction: column; }
+  .main { width: 100%; height: 100%; }
 
-  /* Login */
-  #loginScreen { padding: 12px; align-items: flex-start; overflow-y: auto; min-height: 100vh; }
-  .login-panel { grid-template-columns: 1fr; width: 100%; max-width: 440px; min-height: unset; border-radius: 16px; }
+  /* ── LOGIN: full scroll, no overflow hidden ── */
+  #loginScreen {
+    align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 0 32px;
+  }
+  .login-panel {
+    grid-template-columns: 1fr;
+    width: 100%; max-width: 100%;
+    min-height: unset;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--surface);
+  }
+  /* Hide desktop left panel */
   .login-left { display: none; }
-  .login-right { padding: 32px 24px; }
-  .login-right h2 { font-size: 20px; }
-  .role-grid { gap: 6px; }
+  /* Show mobile branding strip */
+  .login-mobile-brand { display: block; }
+  /* Make right side scroll naturally */
+  .login-right {
+    padding: 24px 20px 32px;
+    background: var(--white);
+    margin: 0 12px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: visible;
+  }
+  .login-right h2 { font-size: 18px; }
+  .login-right .sub { font-size: 12px; margin-bottom: 20px; }
+  /* Role cards: 3 columns still but compact */
+  .role-grid { gap: 6px; margin-bottom: 18px; }
+  .role-card { padding: 10px 6px; }
+  .role-card .rc-icon { width: 28px; height: 28px; margin-bottom: 6px; }
+  .role-card .rc-label { font-size: 11px; }
+  .role-card .rc-desc  { font-size: 9px; }
 
-  /* Sidebar — slide over */
+  /* ── Sidebar ── */
   .sidebar {
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    width: 260px;
-    transform: translateX(-100%);
-    z-index: 300;
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 260px; transform: translateX(-100%); z-index: 300;
   }
   .sidebar.open { transform: translateX(0); }
-
-  /* Menu toggle button */
   .menu-toggle { display: flex; }
 
-  /* App layout */
-  .app { flex-direction: column; }
-  .main { width: 100%; }
-
-  /* Topbar */
+  /* ── Topbar ── */
   .topbar { padding: 0 16px; height: 54px; }
   .topbar-left h2 { font-size: 15px; }
   .top-chip:last-child { display: none; }
+  .top-chip { padding: 4px 10px; font-size: 11px; }
 
-  /* Content */
-  .content { padding: 16px; }
+  /* ── Content — add bottom nav padding ── */
+  .content {
+    padding: 16px 16px calc(var(--bottom-nav-h) + 16px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+  }
 
-  /* Stats */
+  /* ── Bottom Nav ── */
+  .bottom-nav { display: flex; }
+
+  /* ── Stats ── */
   .stats-4 { grid-template-columns: repeat(2,1fr); gap: 10px; }
   .stats-3 { grid-template-columns: repeat(1,1fr); gap: 10px; }
   .stat-card { padding: 14px; }
   .stat-value { font-size: 20px; }
   .stat-icon-wrap { width: 34px; height: 34px; margin-bottom: 10px; }
 
-  /* Cards */
+  /* ── Cards ── */
   .card { border-radius: 10px; }
   .card-body { padding: 14px; }
   .g2, .g3 { grid-template-columns: 1fr; gap: 12px; }
 
-  /* Toolbar */
+  /* ── Toolbar ── */
   .toolbar { gap: 8px; }
   .search-wrap input { width: 100%; min-width: 0; }
   .search-wrap { flex: 1; min-width: 0; }
   .toolbar-end { margin-left: 0; width: 100%; justify-content: space-between; }
-  .toolbar { flex-wrap: wrap; }
 
-  /* Table */
+  /* ── Table ── */
   table { font-size: 12px; }
   thead th { padding: 8px 10px; font-size: 10px; }
   tbody td { padding: 10px 10px; }
 
-  /* Bill form */
+  /* ── Bill form ── */
   .frow-2, .frow-3 { grid-template-columns: 1fr; gap: 10px; }
   .frow-bill { grid-template-columns: 1fr 60px 80px 32px; gap: 6px; }
 
-  /* Invoice */
+  /* ── Invoice ── */
   .invoice { padding: 18px; }
   .inv-head { flex-direction: column; gap: 10px; }
   .inv-meta { text-align: left; }
 
-  /* Bars chart */
+  /* ── Charts ── */
   .bars { height: 90px; gap: 4px; }
   .bar-val { font-size: 9px; }
-
-  /* Progress rows */
   .prog-label { width: 90px; font-size: 11px; }
   .prog-val { width: 52px; font-size: 11px; }
 
-  /* Modal */
+  /* ── Modal ── */
   .modal-bg { padding: 0; align-items: flex-end; }
   .modal-box { width: 100%; max-width: 100%; border-radius: 16px 16px 0 0; max-height: 92vh; }
   .modal-body { padding: 16px; }
@@ -631,7 +672,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .modal-foot { padding: 12px 16px; }
   .modal-foot .btn { flex: 1; justify-content: center; }
 
-  /* Billing page two-col → single col */
+  /* ── Billing 2-col → single ── */
   #page-billing .g2 { grid-template-columns: 1fr; }
 }
 
@@ -644,34 +685,29 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   .stat-label { font-size: 10px; }
   .frow-bill { grid-template-columns: 1fr 50px 70px 30px; gap: 4px; }
   .topbar { padding: 0 12px; }
-  .content { padding: 12px; }
-  .top-chip { padding: 4px 8px; font-size: 11px; }
-  .top-chip svg { display: none; }
-  .search-wrap input { font-size: 13px; }
   .card-head { padding: 12px 14px; }
   .card-body { padding: 12px; }
   .invoice { padding: 14px; font-size: 12px; }
   .inv-num { font-size: 16px; }
   .prog-label { width: 80px; }
+  .login-right { margin: 0 10px; padding: 20px 16px 28px; }
 }
 
 /* ══════════════════════════════════════
    RESPONSIVE — VERY SMALL (≤360px)
 ══════════════════════════════════════ */
 @media (max-width: 360px) {
-  .stats-4 { grid-template-columns: 1fr; }
-  .role-grid { grid-template-columns: 1fr; }
+  .stats-4 { grid-template-columns: 1fr 1fr; }
   .frow-bill { grid-template-columns: 1fr 46px 64px 28px; }
   .stat-value { font-size: 16px; }
+  .login-right { margin: 0 8px; padding: 18px 14px 24px; }
 }
 </style>
 </head>
 <body>
 <div id="loadingBar"></div>
 
-<!-- ══════════════════════════════════════
-     SVG ICON LIBRARY
-══════════════════════════════════════ -->
+<!-- SVG ICON LIBRARY -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
   <symbol id="i-dash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
   <symbol id="i-bill" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="8" y1="9" x2="10" y2="9"/></symbol>
@@ -693,7 +729,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
   <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
-  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
   <symbol id="i-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
@@ -701,16 +736,28 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
   <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol>
 </svg>
 
-<!-- Sidebar Overlay (mobile) -->
+<!-- Sidebar Overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
 <!-- ══════════════════════════════════════
      LOGIN
 ══════════════════════════════════════ -->
 <div id="loginScreen">
+
+  <!-- Mobile-only branding strip (shown above login card on mobile) -->
+  <div class="login-mobile-brand">
+    <div class="mb-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+    </div>
+    <h1>FertiBill</h1>
+    <div class="mb-desc">Billing &amp; Report Management System<br>for Agricultural Enterprises</div>
+  </div>
+
   <div class="login-panel">
+    <!-- Desktop left branding panel -->
     <div class="login-left">
       <div class="login-brand">
         <div class="brand-icon">
@@ -726,6 +773,8 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         <div class="login-feature"><div class="feat-dot"></div><p>Role-based access control for Admin, Manager, and Billing Clerk</p></div>
       </div>
     </div>
+
+    <!-- Right / only panel (mobile) -->
     <div class="login-right">
       <h2>Welcome back</h2>
       <p class="sub">Sign in to your account to continue</p>
@@ -761,7 +810,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         Sign In
         <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
       </button>
-      <p class="login-note">Demo mode: any password works &nbsp;·&nbsp; Try all three roles to explore access control</p>
+      <p class="login-note">Demo mode: any password works &nbsp;·&nbsp; Try all three roles</p>
     </div>
   </div>
 </div>
@@ -848,21 +897,17 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
     </header>
+
     <div class="content">
 
-      <!-- ══════════════════════════════
-           DASHBOARD
-      ══════════════════════════════ -->
+      <!-- DASHBOARD -->
       <div id="page-dashboard" class="page active">
         <div class="stats-row stats-4">
           <div class="stat-card c-teal">
             <div class="stat-icon-wrap teal"><svg width="18" height="18"><use href="#i-money"/></svg></div>
             <div class="stat-label">Today's Revenue</div>
             <div class="stat-value">84,200</div>
-            <div class="stat-sub stat-up">
-              <svg width="12" height="12"><use href="#i-arrow-up"/></svg>
-              12% from yesterday
-            </div>
+            <div class="stat-sub stat-up"><svg width="12" height="12"><use href="#i-arrow-up"/></svg> 12% from yesterday</div>
           </div>
           <div class="stat-card c-gold">
             <div class="stat-icon-wrap gold"><svg width="18" height="18"><use href="#i-bill"/></svg></div>
@@ -883,12 +928,9 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
             <div class="stat-sub stat-neu">registered accounts</div>
           </div>
         </div>
-
         <div class="g2">
           <div class="card">
-            <div class="card-head">
-              <h3><svg class="ch-icon" width="16" height="16"><use href="#i-report"/></svg>Weekly Sales — Rs</h3>
-            </div>
+            <div class="card-head"><h3><svg class="ch-icon" width="16" height="16"><use href="#i-report"/></svg>Weekly Sales — Rs</h3></div>
             <div class="card-body">
               <div class="bars">
                 <div class="bar-col"><div class="bar-val">52k</div><div class="bar-fill" style="height:54%"></div><div class="bar-lbl">Mon</div></div>
@@ -902,9 +944,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
             </div>
           </div>
           <div class="card">
-            <div class="card-head">
-              <h3><svg class="ch-icon" width="16" height="16"><use href="#i-product"/></svg>Top Products — This Month</h3>
-            </div>
+            <div class="card-head"><h3><svg class="ch-icon" width="16" height="16"><use href="#i-product"/></svg>Top Products — This Month</h3></div>
             <div class="card-body">
               <div class="prog-row"><div class="prog-label">DAP Fertilizer</div><div class="prog-track"><div class="prog-fill" style="width:85%;background:var(--teal)"></div></div><div class="prog-val">Rs 1.2L</div></div>
               <div class="prog-row"><div class="prog-label">Urea 50kg</div><div class="prog-track"><div class="prog-fill" style="width:68%;background:var(--navy)"></div></div><div class="prog-val">Rs 96k</div></div>
@@ -914,7 +954,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
             </div>
           </div>
         </div>
-
         <div class="card">
           <div class="card-head">
             <h3><svg class="ch-icon" width="16" height="16"><use href="#i-bills"/></svg>Recent Bills</h3>
@@ -931,9 +970,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ══════════════════════════════
-           CREATE BILL
-      ══════════════════════════════ -->
+      <!-- CREATE BILL -->
       <div id="page-billing" class="page">
         <div id="billAlert" style="display:none"></div>
         <div class="g2" style="align-items:start">
@@ -941,20 +978,12 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
             <div class="card-head"><h3><svg class="ch-icon" width="16" height="16"><use href="#i-bill"/></svg>Bill Details</h3></div>
             <div class="card-body">
               <div class="frow-2">
-                <div class="fgroup">
-                  <label class="flabel">Bill Number</label>
-                  <input class="fcontrol" id="fBillNum" readonly>
-                </div>
-                <div class="fgroup">
-                  <label class="flabel">Date</label>
-                  <input class="fcontrol" type="date" id="fBillDate" value="2026-04-18" onchange="updatePreview()">
-                </div>
+                <div class="fgroup"><label class="flabel">Bill Number</label><input class="fcontrol" id="fBillNum" readonly></div>
+                <div class="fgroup"><label class="flabel">Date</label><input class="fcontrol" type="date" id="fBillDate" value="2026-04-18" onchange="updatePreview()"></div>
               </div>
               <div class="fgroup">
                 <label class="flabel">Customer *</label>
-                <select class="fcontrol" id="fCustomer" onchange="updatePreview()">
-                  <option value="">— Select Customer —</option>
-                </select>
+                <select class="fcontrol" id="fCustomer" onchange="updatePreview()"><option value="">— Select Customer —</option></select>
               </div>
               <div class="section-hdr" style="margin-bottom:10px">Product Lines</div>
               <div id="billItemsContainer"></div>
@@ -981,13 +1010,10 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
               </div>
             </div>
           </div>
-
           <div class="card">
             <div class="card-head">
               <h3><svg class="ch-icon" width="16" height="16"><use href="#i-eye"/></svg>Invoice Preview</h3>
-              <button class="btn btn-outline btn-sm no-print" onclick="window.print()">
-                <svg width="13" height="13"><use href="#i-print"/></svg> Print
-              </button>
+              <button class="btn btn-outline btn-sm no-print" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg> Print</button>
             </div>
             <div class="card-body" style="background:var(--surface)">
               <div class="invoice" id="invoicePreview">
@@ -1019,7 +1045,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
                     <div class="amount">Rs <span id="pv_total">0</span></div>
                   </div>
                 </div>
-                <div class="inv-footer">Thank you for your continued business &nbsp;·&nbsp; FertiBill Management System</div>
+                <div class="inv-footer">Thank you for your continued business &nbsp;·&nbsp; FertiBill</div>
                 <div class="inv-stripe"></div>
               </div>
             </div>
@@ -1027,16 +1053,14 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ══════════════════════════════
-           ALL BILLS
-      ══════════════════════════════ -->
+      <!-- ALL BILLS -->
       <div id="page-bills" class="page">
         <div class="toolbar">
           <div class="search-wrap">
             <svg class="s-icon" width="16" height="16"><use href="#i-search"/></svg>
-            <input class="fcontrol" style="height:36px" id="billSearch" placeholder="Search by customer or bill number..." oninput="renderBillsTable()">
+            <input class="fcontrol" style="height:36px" id="billSearch" placeholder="Search customer or bill no..." oninput="renderBillsTable()">
           </div>
-          <select class="fcontrol" id="billFilterStatus" style="width:160px;height:36px" onchange="renderBillsTable()">
+          <select class="fcontrol" id="billFilterStatus" style="width:140px;height:36px" onchange="renderBillsTable()">
             <option value="">All Statuses</option>
             <option value="Paid">Paid</option>
             <option value="Pending">Pending</option>
@@ -1059,14 +1083,12 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ══════════════════════════════
-           CUSTOMERS
-      ══════════════════════════════ -->
+      <!-- CUSTOMERS -->
       <div id="page-customers" class="page">
         <div class="toolbar">
           <div class="search-wrap">
             <svg class="s-icon" width="16" height="16"><use href="#i-search"/></svg>
-            <input class="fcontrol" style="height:36px" id="custSearch" placeholder="Search by name, phone, or address..." oninput="renderCustomersTable()">
+            <input class="fcontrol" style="height:36px" id="custSearch" placeholder="Search by name, phone, address..." oninput="renderCustomersTable()">
           </div>
           <div class="toolbar-end">
             <span class="count-pill" id="custCountLabel"></span>
@@ -1085,9 +1107,7 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ══════════════════════════════
-           PRODUCTS
-      ══════════════════════════════ -->
+      <!-- PRODUCTS -->
       <div id="page-products" class="page">
         <div class="toolbar">
           <div class="search-wrap">
@@ -1111,14 +1131,12 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
         </div>
       </div>
 
-      <!-- ══════════════════════════════
-           REPORTS
-      ══════════════════════════════ -->
+      <!-- REPORTS -->
       <div id="page-reports" class="page">
         <div id="reportsBlocked" style="display:none">
           <div class="alert alert-warning">
             <div class="alert-icon"><svg width="18" height="18"><use href="#i-lock"/></svg></div>
-            <div><strong>Access Restricted.</strong> Your current role (Billing Clerk) does not have permission to view reports. Please contact your Administrator.</div>
+            <div><strong>Access Restricted.</strong> Your current role (Billing Clerk) does not have permission to view reports.</div>
           </div>
         </div>
         <div id="reportsContent">
@@ -1129,15 +1147,10 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
               <option value="monthly" selected>Monthly Report</option>
             </select>
             <div class="toolbar-end">
-              <button class="btn btn-outline btn-sm" onclick="window.print()">
-                <svg width="13" height="13"><use href="#i-print"/></svg> Print
-              </button>
-              <button class="btn btn-outline btn-sm">
-                <svg width="13" height="13"><use href="#i-download"/></svg> Export PDF
-              </button>
+              <button class="btn btn-outline btn-sm" onclick="window.print()"><svg width="13" height="13"><use href="#i-print"/></svg> Print</button>
+              <button class="btn btn-outline btn-sm"><svg width="13" height="13"><use href="#i-download"/></svg> Export</button>
             </div>
           </div>
-
           <div class="stats-row stats-3">
             <div class="stat-card c-teal">
               <div class="stat-icon-wrap teal"><svg width="18" height="18"><use href="#i-money"/></svg></div>
@@ -1158,7 +1171,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
               <div class="stat-sub stat-dn">Rs 4,60,500 collected</div>
             </div>
           </div>
-
           <div class="g2">
             <div class="card">
               <div class="card-head"><h3><svg class="ch-icon" width="16" height="16"><use href="#i-users"/></svg>Customer-wise Summary</h3></div>
@@ -1174,7 +1186,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
               <div class="card-body" id="prodReportBars"></div>
             </div>
           </div>
-
           <div class="card">
             <div class="card-head"><h3><svg class="ch-icon" width="16" height="16"><use href="#i-bills"/></svg>All Bills This Month</h3></div>
             <div class="tbl-wrap">
@@ -1190,13 +1201,46 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
-</div><!-- /appScreen -->
 
 <!-- ══════════════════════════════════════
-     MODALS
+     MOBILE BOTTOM NAV
 ══════════════════════════════════════ -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bottom-nav-inner">
+    <!-- Dashboard -->
+    <button class="bn-item active" id="bn-dashboard" onclick="showPage('dashboard',document.querySelector('[data-page=dashboard]'));updateBottomNav('dashboard')">
+      <div class="bn-icon"><svg width="20" height="20"><use href="#i-dash"/></svg></div>
+      <span>Home</span>
+    </button>
+    <!-- Bills -->
+    <button class="bn-item" id="bn-bills" onclick="showPage('bills',document.querySelector('[data-page=bills]'));updateBottomNav('bills')">
+      <div class="bn-icon"><svg width="20" height="20"><use href="#i-bills"/></svg></div>
+      <span>Bills</span>
+      <span class="bn-badge" id="bnBillBadge">0</span>
+    </button>
+    <!-- Center FAB: New Bill -->
+    <div class="bn-fab-wrap">
+      <button class="bn-fab" onclick="showPage('billing',document.querySelector('[data-page=billing]'));updateBottomNav('billing')" title="Create New Bill">
+        <svg width="24" height="24"><use href="#i-plus"/></svg>
+      </button>
+      <span class="bn-fab-label">New Bill</span>
+    </div>
+    <!-- Customers -->
+    <button class="bn-item" id="bn-customers" onclick="showPage('customers',document.querySelector('[data-page=customers]'));updateBottomNav('customers')">
+      <div class="bn-icon"><svg width="20" height="20"><use href="#i-users"/></svg></div>
+      <span>Clients</span>
+    </button>
+    <!-- Reports -->
+    <button class="bn-item" id="bn-reports" onclick="showPage('reports',document.querySelector('[data-page=reports]'));updateBottomNav('reports')">
+      <div class="bn-icon"><svg width="20" height="20"><use href="#i-report"/></svg></div>
+      <span>Reports</span>
+    </button>
+  </div>
+</nav>
 
-<!-- Customer Modal -->
+</div><!-- /appScreen -->
+
+<!-- MODALS -->
 <div class="modal-bg" id="custModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -1222,7 +1266,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- Product Modal -->
 <div class="modal-bg" id="prodModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -1248,7 +1291,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- View Bill Modal -->
 <div class="modal-bg" id="viewBillModal">
   <div class="modal-box" style="width:620px">
     <div class="modal-head">
@@ -1263,7 +1305,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- Customer Detail Modal -->
 <div class="modal-bg" id="viewCustModal">
   <div class="modal-box">
     <div class="modal-head">
@@ -1277,9 +1318,6 @@ textarea.fcontrol { resize: vertical; min-height: 70px; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════ -->
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────────
 let currentRole = 'Admin';
@@ -1305,12 +1343,12 @@ let products = [
 
 let bills = [
   {id:'INV-1042',custId:1,customer:'Ali Farmers',     items:[{name:'DAP Fertilizer (50kg)',qty:4,price:2100},{name:'Urea (50kg)',qty:2,price:1800},{name:'SOP Potassium (50kg)',qty:1,price:2200}],amount:14200,status:'Paid',   date:'18 Apr 2026'},
-  {id:'INV-1041',custId:2,customer:'Raza Agri',       items:[{name:'Urea (50kg)',qty:5,price:1750}],                                                                                               amount:8750, status:'Pending',date:'18 Apr 2026'},
-  {id:'INV-1040',custId:3,customer:'Green Fields Co.',items:[{name:'DAP Fertilizer (50kg)',qty:8,price:2100},{name:'SOP Potassium (50kg)',qty:2,price:2200}],                                       amount:21200,status:'Paid',   date:'17 Apr 2026'},
-  {id:'INV-1039',custId:1,customer:'Ali Farmers',     items:[{name:'CAN Nitrate (50kg)',qty:6,price:1650}],                                                                                        amount:9900, status:'Partial',date:'17 Apr 2026'},
-  {id:'INV-1038',custId:3,customer:'Green Fields Co.',items:[{name:'DAP Fertilizer (50kg)',qty:5,price:2100},{name:'Urea (50kg)',qty:3,price:1800}],                                                amount:15900,status:'Paid',   date:'16 Apr 2026'},
-  {id:'INV-1037',custId:4,customer:'Punjab Growers',  items:[{name:'Urea (50kg)',qty:8,price:1800},{name:'CAN Nitrate (50kg)',qty:4,price:1650}],                                                   amount:21000,status:'Paid',   date:'15 Apr 2026'},
-  {id:'INV-1036',custId:2,customer:'Raza Agri',       items:[{name:'Pesticide Confidor 100ml',qty:10,price:850}],                                                                                  amount:8500, status:'Paid',   date:'14 Apr 2026'},
+  {id:'INV-1041',custId:2,customer:'Raza Agri',       items:[{name:'Urea (50kg)',qty:5,price:1750}],amount:8750,status:'Pending',date:'18 Apr 2026'},
+  {id:'INV-1040',custId:3,customer:'Green Fields Co.',items:[{name:'DAP Fertilizer (50kg)',qty:8,price:2100},{name:'SOP Potassium (50kg)',qty:2,price:2200}],amount:21200,status:'Paid',date:'17 Apr 2026'},
+  {id:'INV-1039',custId:1,customer:'Ali Farmers',     items:[{name:'CAN Nitrate (50kg)',qty:6,price:1650}],amount:9900,status:'Partial',date:'17 Apr 2026'},
+  {id:'INV-1038',custId:3,customer:'Green Fields Co.',items:[{name:'DAP Fertilizer (50kg)',qty:5,price:2100},{name:'Urea (50kg)',qty:3,price:1800}],amount:15900,status:'Paid',date:'16 Apr 2026'},
+  {id:'INV-1037',custId:4,customer:'Punjab Growers',  items:[{name:'Urea (50kg)',qty:8,price:1800},{name:'CAN Nitrate (50kg)',qty:4,price:1650}],amount:21000,status:'Paid',date:'15 Apr 2026'},
+  {id:'INV-1036',custId:2,customer:'Raza Agri',       items:[{name:'Pesticide Confidor 100ml',qty:10,price:850}],amount:8500,status:'Paid',date:'14 Apr 2026'},
 ];
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
@@ -1319,27 +1357,29 @@ const sClass = s => s==='Paid'?'paid':s==='Pending'?'pending':'partial';
 const fmt = n => Number(n).toLocaleString('en-PK');
 function itemsSummary(items) {
   if (!items||!items.length) return '—';
-  return items.map(it => {
-    const w = it.name.split(' ');
-    return (w[0]+(w[1]?' '+w[1]:'')+' ×'+it.qty);
-  }).join(', ');
+  return items.map(it => { const w=it.name.split(' '); return (w[0]+(w[1]?' '+w[1]:'')+' ×'+it.qty); }).join(', ');
 }
 function initLoadBar() {
-  const b = document.getElementById('loadingBar');
+  const b=document.getElementById('loadingBar');
   b.style.width='80%';
   setTimeout(()=>{b.style.width='100%';setTimeout(()=>{b.style.opacity='0';},300);},400);
 }
 
 // ── SIDEBAR MOBILE ────────────────────────────────────────────────────────────
 function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('sidebarOverlay');
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('open');
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
 }
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ── BOTTOM NAV ────────────────────────────────────────────────────────────────
+function updateBottomNav(page) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById('bn-'+page);
+  if (el) el.classList.add('active');
 }
 
 // ── LOGIN / LOGOUT ───────────────────────────────────────────────────────────
@@ -1353,12 +1393,20 @@ function doLogin() {
   initLoadBar();
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('appScreen').style.display='block';
-  const initials = currentRole.substring(0,2).toUpperCase();
+  const initials=currentRole.substring(0,2).toUpperCase();
   document.getElementById('sbAvatar').textContent=initials;
   document.getElementById('sbName').textContent=currentRole.toLowerCase();
   document.getElementById('sbRole').textContent=currentRole==='Admin'?'Administrator':currentRole==='Manager'?'Sales Manager':'Billing Clerk';
-  if (currentRole==='Clerk') document.getElementById('navReports').classList.add('locked');
-  else document.getElementById('navReports').classList.remove('locked');
+  // Clerk lock
+  if (currentRole==='Clerk') {
+    document.getElementById('navReports').classList.add('locked');
+    document.getElementById('bn-reports').style.opacity='.35';
+    document.getElementById('bn-reports').style.pointerEvents='none';
+  } else {
+    document.getElementById('navReports').classList.remove('locked');
+    document.getElementById('bn-reports').style.opacity='';
+    document.getElementById('bn-reports').style.pointerEvents='';
+  }
   initApp();
 }
 function logout() {
@@ -1368,28 +1416,29 @@ function logout() {
   document.querySelectorAll('.role-card').forEach((c,i)=>i===0?c.classList.add('active'):c.classList.remove('active'));
   document.getElementById('loginUser').value='admin';
   closeSidebar();
+  // scroll login back to top
+  document.getElementById('loginScreen').scrollTop=0;
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function initApp() {
-  billCounter=1043;
-  billItems=[];
-  refreshBillNum();
-  addBillItem();
+  billCounter=1043; billItems=[];
+  refreshBillNum(); addBillItem();
   populateCustDropdown();
-  renderDashboard();
-  renderBillsTable();
-  renderCustomersTable();
-  renderProductsTable();
+  renderDashboard(); renderBillsTable(); renderCustomersTable(); renderProductsTable();
   updateSbBadge();
+  showPage('dashboard', document.querySelector('[data-page=dashboard]'));
+  updateBottomNav('dashboard');
 }
 function updateSbBadge() {
-  document.getElementById('sbBillBadge').textContent=bills.length;
+  const n=bills.length;
+  document.getElementById('sbBillBadge').textContent=n;
+  document.getElementById('bnBillBadge').textContent=n;
 }
 
 // ── ROUTING ──────────────────────────────────────────────────────────────────
-const pageTitles={dashboard:'Dashboard',billing:'Create New Bill',bills:'All Bills',customers:'Customer Management',products:'Product Catalogue',reports:'Sales Reports'};
-function showPage(name,navEl) {
+const pageTitles={dashboard:'Dashboard',billing:'Create New Bill',bills:'All Bills',customers:'Customers',products:'Products',reports:'Reports'};
+function showPage(name, navEl) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
@@ -1400,7 +1449,9 @@ function showPage(name,navEl) {
   if (name==='bills')     renderBillsTable();
   if (name==='customers') renderCustomersTable();
   if (name==='products')  renderProductsTable();
-  closeSidebar(); // close sidebar on mobile when navigating
+  // scroll content to top
+  document.querySelector('.content').scrollTop=0;
+  closeSidebar();
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────────────────
@@ -1427,10 +1478,7 @@ function populateCustDropdown() {
   customers.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name+(c.type!=='Regular'?' ('+c.type+')':'');sel.appendChild(o);});
   sel.onchange=updatePreview;
 }
-function addBillItem() {
-  billItems.push({prodId:'',name:'',qty:1,price:0});
-  renderBillItems();
-}
+function addBillItem() { billItems.push({prodId:'',name:'',qty:1,price:0}); renderBillItems(); }
 function removeBillItem(i) { if(billItems.length<=1)return;billItems.splice(i,1);renderBillItems(); }
 function renderBillItems() {
   const c=document.getElementById('billItemsContainer');
@@ -1438,22 +1486,19 @@ function renderBillItems() {
   billItems.forEach((item,i)=>{
     const opts=products.map(p=>`<option value="${p.id}" data-price="${p.price}" data-name="${p.name}" ${p.id==item.prodId?'selected':''}>${p.name} — Rs ${fmt(p.price)}</option>`).join('');
     const row=document.createElement('div');
-    row.className='frow-bill';
-    row.style.marginBottom='10px';
+    row.className='frow-bill'; row.style.marginBottom='10px';
     row.innerHTML=`
       <div><select class="fcontrol" onchange="onProdChange(${i},this)"><option value="">Select product</option>${opts}</select></div>
       <div><input class="fcontrol" type="number" min="1" value="${item.qty}" placeholder="Qty" onchange="onQtyChange(${i},this.value)"></div>
       <div><input class="fcontrol" type="number" min="0" value="${item.price}" placeholder="Price" onchange="onPriceChange(${i},this.value)"></div>
-      <div><button class="btn btn-ghost btn-icon" style="height:36px;color:var(--red)" onclick="removeBillItem(${i})" title="Remove">${icon('trash')}</button></div>`;
+      <div><button class="btn btn-ghost btn-icon" style="height:36px;color:var(--red)" onclick="removeBillItem(${i})">${icon('trash')}</button></div>`;
     c.appendChild(row);
   });
   calcTotal();
 }
 function onProdChange(i,sel) {
   const opt=sel.options[sel.selectedIndex];
-  billItems[i].prodId=opt.value;
-  billItems[i].name=opt.dataset.name||'';
-  billItems[i].price=parseInt(opt.dataset.price)||0;
+  billItems[i].prodId=opt.value; billItems[i].name=opt.dataset.name||''; billItems[i].price=parseInt(opt.dataset.price)||0;
   renderBillItems();
 }
 function onQtyChange(i,v) { billItems[i].qty=parseInt(v)||1; calcTotal(); }
@@ -1461,8 +1506,7 @@ function onPriceChange(i,v) { billItems[i].price=parseInt(v)||0; calcTotal(); }
 function calcTotal() {
   const total=billItems.reduce((s,it)=>s+(it.qty*it.price),0);
   document.getElementById('fBillTotal').textContent=fmt(total);
-  updatePreview();
-  return total;
+  updatePreview(); return total;
 }
 function updatePreview() {
   document.getElementById('pv_num').textContent=document.getElementById('fBillNum').value;
@@ -1478,7 +1522,7 @@ function updatePreview() {
   const valid=billItems.filter(it=>it.name&&it.price>0);
   const pvTbody=document.getElementById('pv_items');
   pvTbody.innerHTML=valid.length?valid.map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>Rs ${fmt(it.price)}</td><td>Rs ${fmt(it.qty*it.price)}</td></tr>`).join(''):
-    '<tr><td colspan="4" style="text-align:center;color:var(--text-ter);padding:24px;font-size:12px">Add products above to generate preview</td></tr>';
+    '<tr><td colspan="4" style="text-align:center;color:var(--text-ter);padding:24px;font-size:12px">Add products above</td></tr>';
   document.getElementById('pv_total').textContent=fmt(billItems.reduce((s,it)=>s+(it.qty*it.price),0));
 }
 function saveBill() {
@@ -1492,19 +1536,12 @@ function saveBill() {
   const raw=document.getElementById('fBillDate').value;
   const d=raw?new Date(raw+'T00:00:00').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'18 Apr 2026';
   const nb={id:'INV-'+billCounter,custId,customer:cust.name,items:valid.map(it=>({name:it.name,qty:it.qty,price:it.price})),amount:total,status,date:d};
-  bills.unshift(nb);
-  cust.total+=total;
-  if(status==='Pending') cust.dues+=total;
-  showAlert('billAlert','success',`Bill ${nb.id} saved successfully — Customer: ${cust.name} &nbsp;|&nbsp; Amount: Rs ${fmt(total)}`);
-  billCounter++;
-  refreshBillNum();
-  billItems=[];
-  addBillItem();
+  bills.unshift(nb); cust.total+=total; if(status==='Pending') cust.dues+=total;
+  showAlert('billAlert','success',`Bill ${nb.id} saved — Rs ${fmt(total)}`);
+  billCounter++; refreshBillNum(); billItems=[]; addBillItem();
   document.getElementById('fCustomer').value='';
   document.getElementById('fBillStatus').value='Paid';
-  updatePreview();
-  renderDashboard();
-  updateSbBadge();
+  updatePreview(); renderDashboard(); updateSbBadge();
 }
 
 // ── BILLS TABLE ──────────────────────────────────────────────────────────────
@@ -1514,44 +1551,41 @@ function renderBillsTable() {
   const flt=bills.filter(b=>(b.customer.toLowerCase().includes(s)||b.id.toLowerCase().includes(s))&&(!f||b.status===f));
   document.getElementById('billsCountLabel').textContent=flt.length+' bill'+(flt.length!==1?'s':'');
   const tb=document.getElementById('billsTableBody');
-  if(!flt.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="e-icon">'+icon('bills')+'</div><p>No bills found matching your search.</p></div></td></tr>';return;}
+  if(!flt.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><p>No bills found.</p></div></td></tr>';return;}
   tb.innerHTML=flt.map(b=>`
     <tr>
-      <td class="td-mono">${b.id}</td>
-      <td class="td-bold">${b.customer}</td>
+      <td class="td-mono">${b.id}</td><td class="td-bold">${b.customer}</td>
       <td class="td-muted">${itemsSummary(b.items)}</td>
       <td class="td-bold">${fmt(b.amount)}</td>
       <td><span class="badge badge-${sClass(b.status)}">${b.status}</span></td>
       <td class="td-muted">${b.date}</td>
       <td class="no-print" style="display:flex;gap:6px;padding-top:10px">
-        <button class="btn btn-ghost btn-xs" onclick="viewBill('${b.id}')" title="View">${icon('eye')} View</button>
-        <button class="btn btn-ghost btn-xs" style="color:var(--red)" onclick="deleteBill('${b.id}')" title="Delete">${icon('trash')}</button>
+        <button class="btn btn-ghost btn-xs" onclick="viewBill('${b.id}')">${icon('eye')} View</button>
+        <button class="btn btn-ghost btn-xs" style="color:var(--red)" onclick="deleteBill('${b.id}')">${icon('trash')}</button>
       </td>
     </tr>`).join('');
 }
 function viewBill(id) {
-  const b=bills.find(x=>x.id===id);
-  if(!b)return;
+  const b=bills.find(x=>x.id===id); if(!b)return;
   document.getElementById('viewBillBody').innerHTML=`<div class="invoice">
     <div class="inv-head">
-      <div class="inv-co"><h2>Your Fertilizer Company</h2><div class="inv-sub">Agricultural Supplies &amp; Inputs · Est. 2010<br>Lahore, Pakistan &nbsp;|&nbsp; Tel: 0300-0000000</div></div>
+      <div class="inv-co"><h2>Your Fertilizer Company</h2><div class="inv-sub">Agricultural Supplies · Est. 2010<br>Lahore, Pakistan | Tel: 0300-0000000</div></div>
       <div class="inv-meta"><div class="inv-num">${b.id}</div><div class="inv-date">Date: ${b.date}</div><div style="margin-top:8px"><span class="badge badge-${sClass(b.status)}">${b.status}</span></div></div>
     </div>
     <div class="inv-billed"><div class="lbl">Billed To</div><div class="val">${b.customer}</div></div>
     <table class="inv-table" style="margin-top:16px">
-      <thead><tr><th>Product / Description</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
+      <thead><tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Total</th></tr></thead>
       <tbody>${b.items.map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>Rs ${fmt(it.price)}</td><td>Rs ${fmt(it.qty*it.price)}</td></tr>`).join('')}</tbody>
     </table>
     <div class="inv-total"><div class="inv-total-box"><div class="lbl">Grand Total</div><div class="amount">Rs ${fmt(b.amount)}</div></div></div>
-    <div class="inv-footer">Thank you for your continued business &nbsp;·&nbsp; FertiBill Management System</div>
+    <div class="inv-footer">Thank you for your business · FertiBill</div>
     <div class="inv-stripe"></div>
   </div>`;
   document.getElementById('viewBillModal').classList.add('open');
 }
 function deleteBill(id) {
-  if(!confirm('Delete bill '+id+'? This cannot be undone.'))return;
-  bills=bills.filter(b=>b.id!==id);
-  renderBillsTable(); renderDashboard(); updateSbBadge();
+  if(!confirm('Delete bill '+id+'?'))return;
+  bills=bills.filter(b=>b.id!==id); renderBillsTable(); renderDashboard(); updateSbBadge();
 }
 
 // ── CUSTOMERS ────────────────────────────────────────────────────────────────
@@ -1563,10 +1597,7 @@ function renderCustomersTable() {
   if(!flt.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><p>No customers found.</p></div></td></tr>';return;}
   tb.innerHTML=flt.map(c=>`
     <tr>
-      <td>
-        <div class="td-bold">${c.name}</div>
-        <div style="margin-top:3px"><span class="badge badge-tag">${c.type}</span></div>
-      </td>
+      <td><div class="td-bold">${c.name}</div><div style="margin-top:3px"><span class="badge badge-tag">${c.type}</span></div></td>
       <td class="td-muted">${c.phone||'—'}</td>
       <td class="td-muted">${c.address||'—'}</td>
       <td class="td-bold">${fmt(c.total)}</td>
@@ -1590,8 +1621,7 @@ function saveCustomer() {
   closeModal('custModal'); renderCustomersTable(); populateCustDropdown(); renderDashboard();
 }
 function viewCustomer(id) {
-  const c=customers.find(x=>x.id===id);
-  if(!c)return;
+  const c=customers.find(x=>x.id===id); if(!c)return;
   const cb=bills.filter(b=>b.custId===id);
   document.getElementById('viewCustTitle').textContent=c.name;
   document.getElementById('viewCustBody').innerHTML=`
@@ -1611,8 +1641,7 @@ function viewCustomer(id) {
 }
 function deleteCustomer(id) {
   if(!confirm('Delete this customer?'))return;
-  customers=customers.filter(c=>c.id!==id);
-  renderCustomersTable(); populateCustDropdown(); renderDashboard();
+  customers=customers.filter(c=>c.id!==id); renderCustomersTable(); populateCustDropdown(); renderDashboard();
 }
 
 // ── PRODUCTS ─────────────────────────────────────────────────────────────────
@@ -1626,10 +1655,7 @@ function renderProductsTable() {
     const sc=p.stock>30?'instock':p.stock>10?'low':'critical';
     const sl=p.stock>30?'In Stock':p.stock>10?'Low Stock':'Critical';
     return`<tr>
-      <td>
-        <div class="td-bold">${p.name}</div>
-        <div class="td-muted" style="font-size:11px;margin-top:2px">${p.desc||''}</div>
-      </td>
+      <td><div class="td-bold">${p.name}</div><div class="td-muted" style="font-size:11px;margin-top:2px">${p.desc||''}</div></td>
       <td><span class="badge badge-tag">${p.cat}</span></td>
       <td class="td-muted">${p.unit}</td>
       <td class="td-bold td-mono">${fmt(p.price)}</td>
@@ -1649,8 +1675,7 @@ function openProdModal() {
   document.getElementById('prodModal').classList.add('open');
 }
 function editProduct(id) {
-  const p=products.find(x=>x.id===id);
-  if(!p)return;
+  const p=products.find(x=>x.id===id); if(!p)return;
   editingProdId=id;
   document.getElementById('prodModalTitle').textContent='Edit Product';
   document.getElementById('p_name').value=p.name;
@@ -1678,8 +1703,7 @@ function deleteProduct(id) {
 function renderReports() {
   if(currentRole==='Clerk'){
     document.getElementById('reportsBlocked').style.display='block';
-    document.getElementById('reportsContent').style.display='none';
-    return;
+    document.getElementById('reportsContent').style.display='none'; return;
   }
   document.getElementById('reportsBlocked').style.display='none';
   document.getElementById('reportsContent').style.display='block';
